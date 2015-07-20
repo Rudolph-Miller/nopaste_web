@@ -3,6 +3,8 @@ use Mojo::Base 'Mojolicious::Controller';
 use Formvalidator::Lite;
 use HTML::FillInForm::Lite;
 use Data::GUID::URLSafe;
+use Text::VimColor;
+use Encode;
 
 sub index {
     my $self = shift;
@@ -43,5 +45,19 @@ sub post {
     $self->redirect_to('/paste/' . $entry->id);
 }
 
+sub paste {
+    my $self = shift;
+    my $entry = $self->app->db->single('entry', { id => $self->stash->{id} });
+    unless ( $entry ) {
+        returt $self->render_not_found;
+    }
+
+    my $syntax = Text::VimColor->new(
+        filetype => 'perl',
+        string => Encode::encode_utf8( $entry->body )
+    );
+    $self->stash->{code} = Encode::decode_utf8($syntax->html);
+    $self->stash->{entry} = $entry;
+}
 
 1;

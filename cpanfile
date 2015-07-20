@@ -7,3 +7,5 @@ requires 'DateTime::Format::MySQL';
 requires 'Formvalidator::Lite';
 requires 'HTML::FillInForm::Lite';
 requires 'Data::GUID::URLSafe';
+requires 'Text::VimColor';
+requires 'Encode';
