@@ -37,7 +37,6 @@ sub post {
     }
 
     my $entry = $self->app->db->insert('entry', {
-        id => Data::GUID->new->as_base64_urlsafe,
         title => $self->req->param('title'),
         body => $self->req->param('body')
     });
@@ -49,7 +48,7 @@ sub paste {
     my $self = shift;
     my $entry = $self->app->db->single('entry', { id => $self->stash->{id} });
     unless ( $entry ) {
-        returt $self->render_not_found;
+        return $self->reply->not_found;
     }
 
     my $syntax = Text::VimColor->new(
