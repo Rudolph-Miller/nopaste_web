@@ -1,0 +1,9 @@
+requires 'Mojolicious';
+requires 'DBix::Skinny';
+requires 'DBix::Skinny::Schema';
+requires 'DateTime';
+requires 'DateTime::Format::Strptime';
+requires 'DateTime::Format::MySQL';
+requires 'Formvalidator::Lite';
+requires 'HTML::FillInForm::Lite';
+requires 'Data::GUID::URLSafe';

@@ -6,7 +6,7 @@ use DateTime::Format::MySQL;
 
 sub pre_insert_hook {
     my ( $class, $args ) = @_;
-    $args->{created_on} = Datetime->now( time_zone => 'Asia/Tokyo' );
+    $args->{created_on} = DateTime->now( time_zone => 'Asia/Tokyo' );
 };
 
 install_inflate_rule '^.+_on$' => callback {

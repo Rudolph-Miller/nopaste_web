@@ -1,5 +1,6 @@
 package Nopaste::Web;
 use Mojo::Base 'Mojolicious';
+use Nopaste::DB;
 
 sub startup {
   my $self = shift;
@@ -12,6 +13,7 @@ sub startup {
 
   $r->get('/')->to('root#index');
   $r->post('/')->to('root#post');
+  $r->get('/paste/:id')->to('root#paste');
 }
 
 1;

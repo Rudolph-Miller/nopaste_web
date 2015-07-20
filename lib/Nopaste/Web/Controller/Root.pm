@@ -2,6 +2,7 @@ package Nopaste::Web::Controller::Root;
 use Mojo::Base 'Mojolicious::Controller';
 use Formvalidator::Lite;
 use HTML::FillInForm::Lite;
+use Data::GUID::URLSafe;
 
 sub index {
     my $self = shift;
@@ -30,8 +31,16 @@ sub post {
         return $self->render(
             text => HTML::FillInForm::Lite->fill(\$html, $self->req->params),
             format => 'html'
-        )
+        );
     }
+
+    my $entry = $self->app->db->insert('entry', {
+        id => Data::GUID->new->as_base64_urlsafe,
+        title => $self->req->param('title'),
+        body => $self->req->param('body')
+    });
+
+    $self->redirect_to('/paste/' . $entry->id);
 }
 
 
